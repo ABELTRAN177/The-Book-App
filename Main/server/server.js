@@ -16,16 +16,12 @@ const server = new ApolloServer({
 
 const app = express();
 
-const startApolloServer = async () => {
-    await server.start();
-}
+
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use('/graphql', expressMiddleware(server, {
-    contex: authMiddleware
-}));
+
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -42,5 +38,12 @@ db.once('open', () => {
         console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
     });
 });
+
+const startApolloServer = async () => {
+    await server.start();
+    app.use('/graphql', expressMiddleware(server, {
+        context: authMiddleware
+    }));
+}
 
 startApolloServer();

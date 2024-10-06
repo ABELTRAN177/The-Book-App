@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Form, Row, Col, Card, Button, Container } from "react-bootstrap";
 
 import { useMutation } from "@apollo/client";
 import { SAVE_BOOK } from "../utils/mutations";
@@ -64,12 +64,12 @@ const SearchBooks = ({ books }) => {
             console.error(err);
         }
     }
-    };
+
 
     return (
         <>
         <div className="tex-light bg-dark p-5">
-            <container>
+            <Container>
                 <h2>Search for a Books</h2>
                 <form onSubmit={handleFormSubmit}>
                     <Row>
@@ -90,17 +90,17 @@ const SearchBooks = ({ books }) => {
                         </Col>
                     </Row>
                 </form>
-            </container>
+            </Container>
         </div>
 
-        <container>
+        <Container>
             <h2 className='pt-5'>
                 {searchedBooks.length
                     ? `Viewing ${searchedBooks.length} results:`
                     : 'Search for a book to begin'} 
 
             </h2>
-            <row>
+            <Row>
                 {searchedBooks.map((book) => {
                     return (
                         <Col md="4" key={book.bookId}>
@@ -126,9 +126,10 @@ const SearchBooks = ({ books }) => {
                         </Col>
                     );
                 })}
-            </row>
-        </container>
+            </Row>
+        </Container>
         </>
     );
+}
 
 export default SearchBooks;

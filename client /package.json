@@ -1,16 +1,16 @@
+
 {
-  "name": "client-",
-  "version": "1.0.0",
-  "main": "vite.config.js",
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "Dependencies": {
+  "dependencies": {
     "@apollo/client": "^3.7.14",
     "bootstrap": "^5.2.3",
     "graphql": "^16.6.0",
@@ -29,13 +29,5 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
     "vite": "^5.1.6"
-  },
-  "dependencies": {
-    "@apollo/client": "^3.11.8",
-    "jwt-decode": "^4.0.0",
-    "react": "^18.3.1",
-    "react-bootstrap": "^2.10.5",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2"
   }
 }

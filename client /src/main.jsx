@@ -6,11 +6,13 @@ import App from './App.jsx'
 import SearchBooks from './pages/SearchBooks'
 import SavedBooks from './pages/SavedBooks'
 
+
+// Create a browser router with routes for the App, SearchBooks, and SavedBooks components
 const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
-        errorElement: <h1 className="display-2"> Wrong Page</h1>,
+        errorElement: <h1 className="display-2"> Incorrect Page</h1>,
         children: [
             {
                 index: true,
@@ -23,6 +25,7 @@ const router = createBrowserRouter([
     }
 ])
 
+// Render the router in the root element of the document
 ReactDOM.createRoot(document.getElementById('root')).render(
     <RouterProvider router={router}/>
 )

@@ -1,17 +1,33 @@
+// Export the ESLint configuration
 module.exports = {
-    env: { browser: true, es2020: true },
+    // Specify environments which affect the global variables available
+    env: { 
+        browser: true, // Browser global variables
+        es2020: true // ES2020 global variables
+    },
+    // Extend specific configurations
     extends: [
-        'eslint:recommended',
-        'plugin:react/recommended',
-        'plugin:react/jsx-runtime',
-        'plugin:react-hooks/recommended',
+        'eslint:recommended', // Recommended ESLint rules
+        'plugin:react/recommended', // Recommended rules from the React plugin
+        'plugin:react/jsx-runtime', // Rules for the new JSX transform in React 17
+        'plugin:react-hooks/recommended', // Recommended rules for React hooks
     ],
-
-    parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-    settings: { react: { version: '18.2' } },
+    // Parser options
+    parserOptions: { 
+        ecmaVersion: 'latest', // Latest ECMAScript version
+        sourceType: 'module' // Code is in ECMAScript modules
+    },
+    // ESLint settings
+    settings: { 
+        react: { 
+            version: '18.2' // React version
+        } 
+    },
+    // ESLint plugins
     plugins: ['react-refresh'],
+    // ESLint rules
     rules: {
-        'react/prop-types': 'off',
-        'react-refresh/only-export-components': 'warn',
+        'react/prop-types': 'off', // Turn off prop-types rule
+        'react-refresh/only-export-components': 'warn', // Warn if not only exporting components
     },
 }

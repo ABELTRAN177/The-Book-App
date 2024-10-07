@@ -1,45 +1,51 @@
-const typeDefs = `
-    type Query {
-        me: User
-    }
+const schema = `
+  # User type with fields for the ID, username, email, book count, and saved books
+  type User {
+    id: ID!
+    name: String!
+    emailAddress: String
+    numberOfBooks: Int
+    books: [Book]
+  }
 
-    type User {
-        _id: ID!
-        username: String
-        email: String
-        bookCount: Int
-        savedBooks: [Book]
-    }
+  # Book type with fields for the ID, authors, description, image, link, and title
+  type Book {
+    id: ID!
+    writer: [String]
+    summary: String
+    picture: String
+    url: String
+    name: String!
+  }
 
-    type Auth {
-        token: ID!
-        user: User
-    }
+  # Auth type with fields for the token and user
+  type Auth {
+    jwt: ID!
+    userProfile: User
+  }
 
-    type Mutation {
-        login(email: String!, password: String!): Auth
-        addUser(username: String!, email: String!, password: String!): Auth
-        saveBook(bookData: BookInput!): User
-        removeBook(bookId: ID!): User
-    }
+  # Input type for books
+  input BookInput {
+    writer: [String]
+    summary: String!
+    id: String!
+    picture: String
+    url: String
+    name: String!
+  }
 
-    input BookInput {
-        authors: [String]
-        description: String!
-        bookId: String!
-        image: String
-        link: String
-        title: String!
-    }
+  # Query type with a field for the current user
+  type Query {
+    currentUser: User
+  }
 
-    type Book {
-        bookId: ID!
-        authors: [String]
-        description: String!
-        image: String
-        link: String
-        title: String!
-    }
+  # Mutation type with fields for login, add user, save book, and remove book
+  type Mutation {
+    signIn(emailAddress: String!, password: String!): Auth
+    registerUser(name: String!, emailAddress: String!, password: String!): Auth
+    addBook(bookDetails: BookInput!): User
+    deleteBook(id: ID!): User
+  }
 `;
 
-module.exports = typeDefs;
+module.exports = schema;

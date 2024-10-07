@@ -1,5 +1,6 @@
 # The Book App [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+<img width="1800" alt="Screenshot 2024-10-07 at 1 29 33 PM" src="https://github.com/user-attachments/assets/0dc592fc-894d-4cf6-b9a7-ac6fb510c540">
 
   ## Description
   With the help of our instructor for this assignment, we were to develop an application using MERN applications. We were to code a front and back end application where the user can open, search for, and inqurier about their favorite books! 
@@ -22,7 +23,7 @@
     Manny/ Angel Beltran 
   
   ## Testing
-    run node or node server.js in the terminal/integrated terminal 
+    npm run dev in the terminal/integrated terminal 
 
   ## Render
   https://the-book-app.onrender.com

@@ -7,13 +7,13 @@ import Auth from '../utils/auth';
 
 const LoginForm = () => {
     // State to manage user form data
-    const [formData, setFormData] = useState({ email: '', password: '' });
+    const [formData, setUserFormData] = useState({ email: '', password: '' });
     // State to manage form validation
     const [validated] = useState(false);
     // State to manage alert visibility
     const [showAlert, setShowAlert] = useState(false);
     // Apollo mutation for logging in a user
-    const [loginUser, { error }] = useMutation(LOGIN_USER);
+    const [addUser, { error }] = useMutation(LOGIN_USER);
     // Effect to show alert when there is an error
     useEffect(() => {
         if (error) {
@@ -23,40 +23,43 @@ const LoginForm = () => {
         }
     }, [error]);
 
-    // Handler for input change
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
-    };
-
-    // Handler for form submission
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
-
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.stopPropagation();
-        }
-
-        try {
-            // Attempt to login user with form data
-            const { data } = await loginUser({
-                variables: { ...formData },
-            });
-
-                   // Log the user in with the received token
-        Auth.login(data.login.token);
-    } catch (err) {
-        // Log any errors
-        console.error(err);
+    // Function to handle input changes
+const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    // Update the form data state
+    setUserFormData({ ...formData, [name]: value });
+  };
+  
+  // Function to handle form submission
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    // Check if form has everything (as per react-bootstrap docs)
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
     }
-
+  
+    try {
+      // Attempt to add user with form data
+      const { data } = await addUser({
+        variables: { ...formData },
+      });
+  
+      // Log user in with received token
+      Auth.login(data.addUser.token);
+    } catch (err) {
+      // Log any errors
+      console.error(err);
+    }
+  
     // Reset the form data
-    setFormData({
-        email: '',
-        password: '',
+    setUserFormData({
+      username: '',
+      email: '',
+      password: '',
     });
-};
+  };
 
 // Render the form
 return (
@@ -88,15 +91,15 @@ return (
                 required
             />
             <Form.Control.Feedback type='invalid'>Password required!</Form.Control.Feedback>
-        </Form.Group>
-            <Button
-                disabled={!(userFormData.email && userFormData.password)}
-                type='submit'
-                variant='success'
-            >
-                Submit
-            </Button>
-        </Form>
+                </Form.Group>
+                <Button
+                    disabled={!(formData.email && formData.password)}
+                    type='submit'
+                    variant='success'
+                >
+                    Submit
+                </Button>
+            </Form>
         </>
     );
 };

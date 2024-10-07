@@ -44,9 +44,9 @@ function App() {
     return (
         // Provide the Apollo client to the component tree
         <ApolloProvider client={apolloClient}>
-            // Render the Navbar component
+            {/* // Render the Navbar component */}
             <Navbar />
-            // Render the component for the current route
+            {/* // Render the component for the current route */}
             <Outlet />
         </ApolloProvider>
     );

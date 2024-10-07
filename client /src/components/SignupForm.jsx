@@ -29,23 +29,23 @@ const SignupForm = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     // Update the form data state
-    setFormData({ ...formData, [name]: value });
+    setUserFormData({ ...userFormData, [name]: value });
   };
 
   // Function to handle form submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     // Check if form has everything (as per react-bootstrap docs)
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    // const form = event.currentTarget;
+    // if (form.checkValidity() === false) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // }
 
     try {
       // Attempt to add user with form data
       const { data } = await addUser({
-        variables: { ...formData },
+        variables: { ...userFormData },
       });
 
       // Log user in with received token
@@ -56,7 +56,7 @@ const SignupForm = () => {
     }
 
     // Reset the form data
-    setFormData({
+    setUserFormData({
       username: '',
       email: '',
       password: '',

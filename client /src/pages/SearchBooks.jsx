@@ -8,9 +8,10 @@ import Auth from '../utils/auth';
 
 const SearchBooks = () => {
   // Create state for holding returned Google API data
-  const [foundBooks, setFoundBooks] = useState([]);
-  // Create state for holding our search field data
+  const [searchedBooks, setSearchedBooks] = useState([]);
+    // Create state for holding our search field data
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchInput, setSearchInput] = useState('');
   // Create state to hold saved bookId values
   const [storedBookIds, setStoredBookIds] = useState(getSavedBookIds());
   const [saveBook, { error }] = useMutation(SAVE_BOOK);

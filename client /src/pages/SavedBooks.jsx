@@ -1,11 +1,5 @@
-import{
-    Container,
-    Row,
-    Col,
-    Card,
-    Button
-} from 'react-bootstrap';
-
+// Import necessary components and functions
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 import { REMOVE_BOOK } from '../utils/mutations';
@@ -13,34 +7,46 @@ import { removeBookId } from '../utils/localStorage';
 
 import Auth from '../utils/auth';
 
+// Define the SavedBooks component
 const SavedBooks = () => {
-    const { loading, data } = useQuery(QUERY_ME);
-    const [removeBook] = useMutation(REMOVE_BOOK);
+    // Execute the QUERY_ME query and get the loading state and data
+    const { loading, data: queryData } = useQuery(QUERY_ME);
+    // Define the removeBook mutation
+    const [removeBookMutation] = useMutation(REMOVE_BOOK);
 
-    const userData = data?.me || {};
+    // Get the user data from the query data (default to an empty object if data is undefined)
+    const userData = queryData?.me || {};
 
+    // Define the function to handle deleting a book
     const handleDeleteBook = async (bookId) => {
+        // Get the token if the user is logged in
         const token = Auth.loggedIn() ? Auth.getToken() : null;
 
+        // If there's no token, return false
         if (!token) {
             return false;
         }
 
         try {
-            const { data } = await removeBook({
+            // Execute the removeBook mutation with the bookId as a variable
+            const { data: mutationData } = await removeBookMutation({
                 variables: { bookId }
             });
 
+            // Remove the book ID from local storage
             removeBookId(bookId);
         } catch (err) {
+            // Log any errors
             console.error(err);
         }
     };
 
+    // If the query is loading, display a loading message
     if (loading) {
         return <h2>Loading...</h2>;
     }
 
+    // Render the component
     return (
      <>
      <div fluid className="text-light bg-dark p-5">

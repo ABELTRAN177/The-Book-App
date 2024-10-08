@@ -5,45 +5,31 @@ import { SAVE_BOOK } from '../utils/mutations';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 import Auth from '../utils/auth';
-
 const SearchBooks = () => {
-  // Create state for holding returned Google API data
   const [searchedBooks, setSearchedBooks] = useState([]);
-    // Create state for holding our search field data
-  const [searchTerm, setSearchTerm] = useState('');
   const [searchInput, setSearchInput] = useState('');
-  // Create state to hold saved bookId values
-  const [storedBookIds, setStoredBookIds] = useState(getSavedBookIds());
+  const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
   const [saveBook, { error }] = useMutation(SAVE_BOOK);
 
-  // Use useEffect to update saved book IDs in localStorage when 'storedBookIds' state changes
   useEffect(() => {
-    return () => saveBookIds(storedBookIds);
+    return () => saveBookIds(savedBookIds);
   });
 
-  // Create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
-    // If the search term is empty, return early
-    if (!searchTerm) {
+    if (!searchInput) {
       return false;
     }
-
     try {
-      // Fetch books from Google's Books API
       const response = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`
+        `https://www.googleapis.com/books/v1/volumes?q=${searchInput}`
       );
 
-      // If the response was not ok, throw an error
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
 
-      // Parse the response body as JSON, get the 'items' field
       const { items } = await response.json();
-
 
       const bookData = items.map((book) => ({
         bookId: book.id,
@@ -60,12 +46,9 @@ const SearchBooks = () => {
     }
   };
 
-  // create function to handle saving a book to our database
   const handleSaveBook = async (bookId) => {
-    // find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-    console.log(bookToSave);
-    // get token
+
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -86,7 +69,7 @@ const SearchBooks = () => {
     <>
       <div className="text-light bg-dark p-5">
         <Container>
-          <h1>Search for Books!</h1>
+          <h1>Search Books!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
@@ -101,7 +84,7 @@ const SearchBooks = () => {
               </Col>
               <Col xs={12} md={4}>
                 <Button type="submit" variant="success" size="lg">
-                  Submit Search
+                   Search
                 </Button>
               </Col>
             </Row>

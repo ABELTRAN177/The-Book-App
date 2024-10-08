@@ -1,45 +1,46 @@
-const schema = `
+const typeDefs = `
   type User {
-    id: ID!
-    name: String!
-    emailAddress: String
-    numberOfBooks: Int
-    books: [Book]
+    _id: ID!
+    username: String!
+    email: String
+    bookCount: Int
+    savedBooks: [Book]
   }
 
   type Book {
-    id: ID!
-    writer: [String]
-    summary: String
-    picture: String
-    url: String
-    name: String!
+    bookId: ID!
+    authors: [String]
+    description: String
+    image: String
+    link: String
+    title: String!
   }
 
   type Auth {
-    jwt: ID!
-    userProfile: User
+    token: ID!
+    user: User
   }
 
   input BookInput {
-    writer: [String]
-    summary: String!
-    id: String!
-    picture: String
-    url: String
-    name: String!
+    authors: [String]
+    description: String!
+    bookId: String!
+    image: String
+    link: String
+    title: String!
   }
 
   type Query {
-    currentUser: User
+    me: User
   }
 
   type Mutation {
-    signIn(emailAddress: String!, password: String!): Auth
-    registerUser(name: String!, emailAddress: String!, password: String!): Auth
-    addBook(bookDetails: BookInput!): User
-    deleteBook(id: ID!): User
+    login(email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!): Auth
+    saveBook(bookData: BookInput!): User
+    removeBook(bookId: ID!): User
   }
 `;
 
-module.exports = schema;
+module.exports = typeDefs;
+

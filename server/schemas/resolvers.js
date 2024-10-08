@@ -1,51 +1,45 @@
-const { User: UserModel } = require('../models');
-const { signToken: generateToken, AuthenticationError: AuthError } = require('../utils/auth');
+const { User } = require('../models');
+const { createToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
     Query: {
-        // Resolver for the "me" query
         me: async (parent, args, context) => {
             if (context.user) {
-                // If the user is authenticated, find the user in the database and return their data
-                const userData = await UserModel.findOne({ _id: context.user._id })
+                const userData = await User.findOne({ _id: context.user._id })
                     .select('-__v -password')
 
                 return userData;
             }
 
-            // If the user is not authenticated, throw an authentication error
-            throw  AuthError;
+            throw  AuthenticationError;
         },
     },
 
     Mutation: {
-        // Resolver for the "login" mutation
         login: async (parent, { email, password }) => {
-            const user = await UserModel.findOne({ email });
+            const user = await User.findOne({ email });
 
             if (!user) {
-                throw AuthError;
+                throw AuthenticationError;
             }
 
             const correctPw = await user.isCorrectPassword(password);
 
             if (!correctPw) {
-                throw AuthError;
+                throw AuthenticationError;
             }
 
-            const token = generateToken(user);
+            const token = createToken(user);
             return { token, user };
         },
 
-        // Resolver for the "addUser" mutation
         addUser: async (parent, args) => {
-            const user = await UserModel.create(args);
-            const token = generateToken(user);
+            const user = await User.create(args);
+            const token = createToken(user);
 
             return { token, user };
         },
 
-        // Resolver for the "saveBook" mutation
         saveBook: async (parent, { bookData }, context) => {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(

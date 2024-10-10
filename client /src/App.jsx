@@ -3,12 +3,7 @@ import './App.css';
 // Import the Outlet component from react-router-dom for rendering route components
 import { Outlet } from 'react-router-dom';
 // Import the necessary components from @apollo/client for creating an Apollo client
-import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-    createHttpLink,
-} from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 // Import the setContext function from @apollo/client/link/context for setting the context of Apollo links
 import { setContext } from '@apollo/client/link/context';
 

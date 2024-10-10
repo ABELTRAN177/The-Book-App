@@ -10,6 +10,7 @@ const SavedBooks = () => {
   const { loading, data } = useQuery(QUERY_ME);
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
   const userData = data?.me || {};
+
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
     if (!token) {
@@ -19,6 +20,9 @@ const SavedBooks = () => {
       const { data } = await removeBook({
         variables: { bookId },
       });
+      if (!data) {
+        throw new Error('something went wrong!');
+      }
       removeBookId(bookId);
     } catch (err) {
       console.error(err);
